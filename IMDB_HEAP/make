@@ -1,0 +1,1 @@
+gcc -O2 -o test test.c db/dbmem.c db/dballoc.c db/dbdata.c db/dblock.c db/dbindex.c db/dblog.c db/dbhash.c db/dbcompare.c db/dbquery.c db/dbutil.c db/dbmpool.c db/dbschema.c  -lm
