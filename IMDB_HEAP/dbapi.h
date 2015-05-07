@@ -268,16 +268,16 @@ wg_int wg_decode_uri_prefix_copy(void* db, wg_int data, char* strbuf, wg_int buf
 
 
 wg_int wg_encode_blob(void* db, char* str, char* type, wg_int len);
-void* wg_encode_blob2(void* db, char* str, char* type, wg_int len);
-//API addition
-
 char* wg_decode_blob(void* db, wg_int data);
 char* wg_decode_blob_type(void* db, wg_int data);
-
 wg_int wg_decode_blob_len(void* db, wg_int data);
 wg_int wg_decode_blob_copy(void* db, wg_int data, char* strbuf, wg_int buflen);
 wg_int wg_decode_blob_type_len(void* db, wg_int data);
 wg_int wg_decode_blob_type_copy(void* db, wg_int data, char* langbuf, wg_int buflen);
+
+//heap version blob whiteDB component
+void* dbmalloc(void* db, int size);
+
 
 /// ptr to record
 

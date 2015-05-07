@@ -227,7 +227,6 @@ wg_int wg_decode_uri_prefix_copy(void* db, wg_int data, char* strbuf, wg_int buf
 // along with an obligatory length in bytes
 
 wg_int wg_encode_blob(void* db, char* str, char* type, wg_int len);
-void* wg_encode_blob2(void* db, char* str, char* type, wg_int len);
 
 char* wg_decode_blob(void* db, wg_int data);
 char* wg_decode_blob_type(void* db, wg_int data);
@@ -236,6 +235,22 @@ wg_int wg_decode_blob_len(void* db, wg_int data);
 wg_int wg_decode_blob_copy(void* db, wg_int data, char* strbuf, wg_int buflen);
 wg_int wg_decode_blob_type_len(void* db, wg_int data);
 wg_int wg_decode_blob_type_copy(void* db, wg_int data, char* langbuf, wg_int buflen);
+
+//heap version blob whiteDB component
+/**************************************************************************/
+void* dbmalloc(void* db, int size);
+gint wg_encode_blob_heap(void* db, wg_int len);
+gint wg_encode_uniblob_heap(void* db, gint type, gint len);
+static gint find_create_longstr_heap(void* db, gint type, gint length);
+char* wg_decode_unistr_heap(void* db, gint data);
+
+//error message
+static gint show_data_error(void* db, char* errmsg);
+static gint show_data_error_nr(void* db, char* errmsg, gint nr);
+static gint show_data_error_double(void* db, char* errmsg, double nr);
+static gint show_data_error_str(void* db, char* errmsg, char* str);
+/**************************************************************************/
+
 
 // anonconst
 
@@ -650,8 +665,6 @@ gint usage from start:
 
 gint wg_encode_unistr(void* db, char* str, char* lang, gint type); ///< let lang==NULL if not used
 gint wg_encode_uniblob(void* db, char* str, char* lang, gint type, gint len);
-void* wg_encode_uniblob2(void* db, char* str, char* lang, gint type, gint len);
-//this is test func
 
 char* wg_decode_unistr(void* db, wg_int data, gint type);
 char* wg_decode_unistr_lang(void* db, wg_int data, gint type);

@@ -2263,7 +2263,6 @@ wg_int wg_decode_uri_prefix_copy(void* db, wg_int data, char* langbuf, wg_int bu
 
 /* blob */
 
-
 wg_int wg_encode_blob(void* db, char* str, char* type, wg_int len) {
 #ifdef CHECK
   if (!dbcheck(db)) {
@@ -2276,21 +2275,6 @@ wg_int wg_encode_blob(void* db, char* str, char* type, wg_int len) {
   }
 #endif
   return wg_encode_uniblob(db,str,type,WG_BLOBTYPE,len);
-}
-
-
-void* wg_encode_blob2(void* db, char* str, char* type, wg_int len) {
-#ifdef CHECK
-  if (!dbcheck(db)) {
-    show_data_error(db,"wrong database pointer given to wg_encode_blob");
-    return NULL;
-  }
-  if (str==NULL) {
-    show_data_error(db,"NULL string ptr given to wg_encode_blob");
-    return NULL;
-  }
-#endif
-  return (void*)wg_encode_uniblob2(db,str,type,WG_BLOBTYPE,len);
 }
 
 char* wg_decode_blob(void* db, wg_int data) {
@@ -2306,7 +2290,6 @@ char* wg_decode_blob(void* db, wg_int data) {
 #endif
   return wg_decode_unistr(db,data,WG_BLOBTYPE);
 }
-
 
 wg_int wg_decode_blob_len(void* db, wg_int data) {
 #ifdef CHECK
@@ -2590,22 +2573,6 @@ gint wg_encode_uniblob(void* db, char* str, char* lang, gint type, gint len) {
 }
 
 
-void* wg_encode_uniblob2(void* db, char* str, char* lang, gint type, gint len) {
-  gint offset;
-
-  if (0) {
-  } else {
-    offset=find_create_longstr(db,str,lang,type,len);
-    if (!offset) {
-      show_data_error_nr(db,"cannot create a blob of size ",len);
-      //return WG_ILLEGAL;
-      return NULL;
-    }
-    return (void*)(db+encode_longstr_offset(offset));
-  }
-}
-
-
 static gint find_create_longstr(void* db, char* data, char* extrastr, gint type, gint length) {
   db_memsegment_header* dbh = dbmemsegh(db);
   gint offset;
@@ -2621,7 +2588,6 @@ static gint find_create_longstr(void* db, char* data, char* extrastr, gint type,
 
   if (0) {
   } else {
-
     // find hash, check if exists and use if found
     hash=wg_hash_typedstr(db,data,extrastr,type,length);
     //hasharrel=((gint*)(offsettoptr(db,((db->strhash_area_header).arraystart))))[hash];
@@ -3190,7 +3156,6 @@ static void recptr_clearbit(void *db,void *ptr) {
 #endif
 
 /* ------------ errors ---------------- */
-
 
 static gint show_data_error(void* db, char* errmsg) {
 #ifdef WG_NO_ERRPRINT
