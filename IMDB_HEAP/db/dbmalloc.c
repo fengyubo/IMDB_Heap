@@ -20,7 +20,9 @@ extern "C" {
 #else
 #include "../config.h"
 #endif
+//#include "dbapi.h"
 #include "dballoc.h"
+#include "dbquery.h"
 #include "dbdata.h"
 #include "dbhash.h"
 #include "dblog.h"
@@ -28,9 +30,7 @@ extern "C" {
 #include "dbcompare.h"
 #include "dblock.h"
 
-//#define HEAP_MEM_TYPE "__binary"
-
-/* blob */
+/* malloc function: given ptr to db and size of required space, then return ptr to the space */
 void* dbmalloc(void* db, int size) {
 	wg_int enc_space_data,enc_space_ptr, enc_space_size, enc_reserve;
 	void *rec;
@@ -50,7 +50,7 @@ void* dbmalloc(void* db, int size) {
       return NULL;
     }
 	if(wg_set_field(db, rec, 1, enc_space_data)) {
-      printf("ERR: field 0 failed\n");
+      printf("ERR: field 1 failed\n");
       return NULL;
     }
 
@@ -72,13 +72,31 @@ void* dbmalloc(void* db, int size) {
       return NULL;
     }
 
-    //last one: reserve, no special meaning
-	if(wg_set_field(db, rec, 2, wg_encode_int(db, 0))) {
+    //last one: size of the space
+	if(wg_set_field(db, rec, 2, wg_encode_int(db, size))) {
       printf("ERR: field 2 failed.\n");
       return NULL;
     }
 
     return space_ptr;
+}
+
+/*free function: given ptr to db and free pointer, return void*/
+void dbfree(void* db, void* free_ptr){
+  void* rec;
+  char ptr_tmp[sizeof(void*)+1] = {0x0};
+
+  if(!free_ptr) return ;
+  *((long*)ptr_tmp) = (long)free_ptr;
+
+  rec = wg_find_record_str(db, 0, WG_COND_EQUAL, (char*)ptr_tmp, NULL);
+  memset( free_ptr, 0, wg_decode_int(db, wg_get_field(db,rec,2) ) );
+
+  if(wg_delete_record(db, rec)) {
+    printf("ERR: free error\n");
+  }
+  
+  return ;
 }
 
 
@@ -136,7 +154,15 @@ static gint find_create_longstr_heap(void* db, gint type, gint length) {
     for(i=0;lenrest && i<sizeof(gint)-lenrest;i++) {
       *(lstrptr+length+(LONGSTR_HEADER_GINTS*sizeof(gint))+i)=0;
     }
-    // no more extra string, then this part is modified
+    // char extra_string[strlen(HEAP_MEM_TYPE)+1];
+    // strcpy(extra_string,HEAP_MEM_TYPE); 
+    // tmp=wg_encode_str(db,extra_string,NULL);
+    // if (tmp==WG_ILLEGAL) {
+    //     //show_data_error_nr(db,"cannot create an (extra)string of size ",strlen(extrastr));
+    //     return 0;
+    // }
+    // dbstore(db,offset+LONGSTR_EXTRASTR_POS*sizeof(gint),tmp);
+    //if no more extra string, then this part is modified
     dbstore(db,offset+LONGSTR_EXTRASTR_POS*sizeof(gint),0);
     // store metainfo: full obj len and str len difference, plus type
     tmp=(getusedobjectsize(*((gint*)lstrptr))-length)<<LONGSTR_META_LENDIFSHFT;

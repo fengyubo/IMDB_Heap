@@ -240,7 +240,6 @@ gint wg_delete_record(void* db, void *rec) {
     return -2;
   }
 #endif
-
   /* Loop over fields, freeing them */
   dendptr = (gint *) (((char *) rec) + datarec_size_bytes(*((gint *)rec)));
   for(dptr=(gint *)rec+RECORD_HEADER_GINTS; dptr<dendptr; dptr++) {

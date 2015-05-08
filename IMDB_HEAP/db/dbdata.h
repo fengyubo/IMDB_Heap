@@ -79,6 +79,9 @@ extern double round(double);
 
 */
 
+#define HEAP_MEM_TYPE "__binary"
+
+
 typedef ptrdiff_t wg_int;
 typedef size_t wg_uint; // used in time enc
 

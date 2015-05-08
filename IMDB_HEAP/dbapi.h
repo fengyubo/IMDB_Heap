@@ -277,7 +277,7 @@ wg_int wg_decode_blob_type_copy(void* db, wg_int data, char* langbuf, wg_int buf
 
 //heap version blob whiteDB component
 void* dbmalloc(void* db, int size);
-
+void dbfree(void* db, void* free_ptr);
 
 /// ptr to record
 

@@ -9,9 +9,12 @@ int main(int argc, char **argv){
 	const char* test_str = "TEST STRING HEAP";
 	void* db;
   	db = wg_attach_database("1000", 2000000);
-  	char* tp = (char*)dbmalloc(db,1024);
-  	strcpy(tp,test_str);
-  	printf("%s\n",tp);
+  	char* tp = NULL;
+  	int i = 0;
+  	for( i = 0; i < 2000000; ++i) {
+  		tp = (char*)dbmalloc(db,1024);
+  		dbfree(db,tp);
+  	}
 	wg_delete_database("1000");
 
 
