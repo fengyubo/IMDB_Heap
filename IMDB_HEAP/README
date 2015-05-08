@@ -1,0 +1,15 @@
+This dir containing two parts: 
+
+(1) dir db contains source files, including basic whiteDB files, and additional file "dbmalloc.c" which is implementation of the heap API. and API file has already been updated, new heap api also included.
+
+
+(2). make is a shell file used to help compile source files, could be used as below:
+"./make <test file name>", afer compile, there will be one new file in current dir: heap_test. By this way, we could test API and their performance.
+
+
+*Comments:
+1. about how to use new API, I made 2 test file in source dir, one of them is to test basic feature, and another of them is used to test some real program using system heap. 
+
+2. db size could not be expanded: after once allocate, then the size of db is fixed, there is no straight forward way to deal with it, dump the db then reload db maybe could help solve this, but I haven't test this.
+
+3. database pointer is supported in a very straight forward way, I didn't solve it. but I will do it later.

@@ -1,1 +1,2 @@
-gcc -O2 -o test2 test2.c db/dbmem.c db/dballoc.c db/dbdata.c db/dblock.c db/dbindex.c db/dblog.c db/dbhash.c db/dbcompare.c db/dbquery.c db/dbutil.c db/dbmpool.c db/dbschema.c db/dbmalloc.c -lm
+#! /bin/sh
+gcc -o heap_test -g $1 db/dbmem.c db/dballoc.c db/dbdata.c db/dblock.c db/dbindex.c db/dblog.c db/dbhash.c db/dbcompare.c db/dbquery.c db/dbutil.c db/dbmpool.c db/dbschema.c db/dbmalloc.c -lm

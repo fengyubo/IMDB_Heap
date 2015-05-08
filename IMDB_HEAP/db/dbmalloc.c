@@ -90,12 +90,12 @@ void dbfree(void* db, void* free_ptr){
   *((long*)ptr_tmp) = (long)free_ptr;
 
   rec = wg_find_record_str(db, 0, WG_COND_EQUAL, (char*)ptr_tmp, NULL);
-  memset( free_ptr, 0, wg_decode_int(db, wg_get_field(db,rec,2) ) );
+  //memset( free_ptr, 0, wg_decode_int(db, wg_get_field(db,rec,2) ) );
 
   if(wg_delete_record(db, rec)) {
     printf("ERR: free error\n");
   }
-  
+
   return ;
 }
 
@@ -154,14 +154,6 @@ static gint find_create_longstr_heap(void* db, gint type, gint length) {
     for(i=0;lenrest && i<sizeof(gint)-lenrest;i++) {
       *(lstrptr+length+(LONGSTR_HEADER_GINTS*sizeof(gint))+i)=0;
     }
-    // char extra_string[strlen(HEAP_MEM_TYPE)+1];
-    // strcpy(extra_string,HEAP_MEM_TYPE); 
-    // tmp=wg_encode_str(db,extra_string,NULL);
-    // if (tmp==WG_ILLEGAL) {
-    //     //show_data_error_nr(db,"cannot create an (extra)string of size ",strlen(extrastr));
-    //     return 0;
-    // }
-    // dbstore(db,offset+LONGSTR_EXTRASTR_POS*sizeof(gint),tmp);
     //if no more extra string, then this part is modified
     dbstore(db,offset+LONGSTR_EXTRASTR_POS*sizeof(gint),0);
     // store metainfo: full obj len and str len difference, plus type
