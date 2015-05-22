@@ -2,16 +2,17 @@
 #include <string.h>
 #include <memory.h>
 #include <malloc.h>
+#include "dbmalloc.h"
 //#include <whitedb/dbapi.h>
-#include "dbapi.h"
+//#include "dbapi.h"
 
 int main(int argc, char **argv){
 	const char* test_str = "TEST STRING HEAP";
 	// create new db pointer used for allocate db
-  void* db;
+  void* db  = NULL;//heap_db_attach(20000000);
 
   // in order to use db, we have to attach the db with shared memroy allocated by OS.
-  db = wg_attach_database("1000", 2000000);
+  db = db_heap_create("1000", 2000000);
 
   char* tp = NULL;
   int i = 0;
@@ -36,9 +37,7 @@ int main(int argc, char **argv){
 
   //delete data base that we used in this program
 	wg_delete_database("1000");
-
-
-
+  //heap_db_detach(db);
 
   return 0;
 }

@@ -240,6 +240,7 @@ gint wg_delete_record(void* db, void *rec) {
     return -2;
   }
 #endif
+
   /* Loop over fields, freeing them */
   dendptr = (gint *) (((char *) rec) + datarec_size_bytes(*((gint *)rec)));
   for(dptr=(gint *)rec+RECORD_HEADER_GINTS; dptr<dendptr; dptr++) {
@@ -2262,6 +2263,7 @@ wg_int wg_decode_uri_prefix_copy(void* db, wg_int data, char* langbuf, wg_int bu
 
 /* blob */
 
+
 wg_int wg_encode_blob(void* db, char* str, char* type, wg_int len) {
 #ifdef CHECK
   if (!dbcheck(db)) {
@@ -2276,6 +2278,7 @@ wg_int wg_encode_blob(void* db, char* str, char* type, wg_int len) {
   return wg_encode_uniblob(db,str,type,WG_BLOBTYPE,len);
 }
 
+
 char* wg_decode_blob(void* db, wg_int data) {
 #ifdef CHECK
   if (!dbcheck(db)) {
@@ -2289,6 +2292,7 @@ char* wg_decode_blob(void* db, wg_int data) {
 #endif
   return wg_decode_unistr(db,data,WG_BLOBTYPE);
 }
+
 
 wg_int wg_decode_blob_len(void* db, wg_int data) {
 #ifdef CHECK
@@ -2587,6 +2591,7 @@ static gint find_create_longstr(void* db, char* data, char* extrastr, gint type,
 
   if (0) {
   } else {
+
     // find hash, check if exists and use if found
     hash=wg_hash_typedstr(db,data,extrastr,type,length);
     //hasharrel=((gint*)(offsettoptr(db,((db->strhash_area_header).arraystart))))[hash];
@@ -3155,6 +3160,7 @@ static void recptr_clearbit(void *db,void *ptr) {
 #endif
 
 /* ------------ errors ---------------- */
+
 
 static gint show_data_error(void* db, char* errmsg) {
 #ifdef WG_NO_ERRPRINT

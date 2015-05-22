@@ -253,16 +253,13 @@ gint wg_remove_from_strhash(void* db, gint longstr) {
     if (hashchain==longstr) {
       nextchain=dbfetch(db,decode_longstr_offset(hashchain)+(LONGSTR_HASHCHAIN_POS*sizeof(gint)));
       dbstore(db,chainoffset,nextchain);
-      break;
-      //return 0;
+      return 0;
     }
     chainoffset=decode_longstr_offset(hashchain)+(LONGSTR_HASHCHAIN_POS*sizeof(gint));
     hashchain=dbfetch(db,chainoffset);
   }
-  //HEAP: this part is modified, there probably some bug, since ignoring the non-exists hash ptr, which is not caused by heap blob
-//  show_consistency_error_nr(db,"string not found in hash during deletion, offset",offset);
-//  return -1;
-  return 0;
+  show_consistency_error_nr(db,"string not found in hash during deletion, offset",offset);
+  return -1;
 }
 
 

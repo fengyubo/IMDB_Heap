@@ -79,9 +79,6 @@ extern double round(double);
 
 */
 
-#define HEAP_MEM_TYPE "__binary"
-
-
 typedef ptrdiff_t wg_int;
 typedef size_t wg_uint; // used in time enc
 
@@ -238,22 +235,6 @@ wg_int wg_decode_blob_len(void* db, wg_int data);
 wg_int wg_decode_blob_copy(void* db, wg_int data, char* strbuf, wg_int buflen);
 wg_int wg_decode_blob_type_len(void* db, wg_int data);
 wg_int wg_decode_blob_type_copy(void* db, wg_int data, char* langbuf, wg_int buflen);
-
-//heap version blob whiteDB component
-/**************************************************************************/
-void* dbmalloc(void* db, int size);
-gint wg_encode_blob_heap(void* db, wg_int len);
-gint wg_encode_uniblob_heap(void* db, gint type, gint len);
-static gint find_create_longstr_heap(void* db, gint type, gint length);
-char* wg_decode_unistr_heap(void* db, gint data);
-
-//error message
-static gint show_data_error(void* db, char* errmsg);
-static gint show_data_error_nr(void* db, char* errmsg, gint nr);
-static gint show_data_error_double(void* db, char* errmsg, double nr);
-static gint show_data_error_str(void* db, char* errmsg, char* str);
-/**************************************************************************/
-
 
 // anonconst
 

@@ -1,3 +1,12 @@
+for this version, some issue are modified and heap feature is isolated from whitedb:
+
+1) the crash bug: for test case 2, the previous version has some crash issue, sometimes crash but sometimes not, the reason for crash is pointer, instead of using char* to be pointer, double should be used to store pointer to space in db, by encoding and placed as key in record, this problem is solved, and source code could be executed stable.
+
+2) isolation: some file is transformed from previous db dir to outside, and I isolated all functions that should be used in heap implementation: all related code that should be modified is isolated into file dbmalloc.c, corresponding part head file is created, therefore, if there is some changes for whiteDB, there is no need to bother source code but it still works.
+
+Comments: how to use the api and code are same as previous.
+
+================================
 This dir containing two parts: 
 
 (1) dir db contains source files, including basic whiteDB files, and additional file "dbmalloc.c" which is implementation of the heap API. and API file has already been updated, new heap api also included.

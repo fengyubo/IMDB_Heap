@@ -1,2 +1,2 @@
 #! /bin/sh
-gcc -o heap_test -g $1 db/dbmem.c db/dballoc.c db/dbdata.c db/dblock.c db/dbindex.c db/dblog.c db/dbhash.c db/dbcompare.c db/dbquery.c db/dbutil.c db/dbmpool.c db/dbschema.c db/dbmalloc.c -lm
+gcc -o heap_test -g $1 Db/dbmem.c Db/dballoc.c Db/dbdata.c Db/dblock.c Db/dbindex.c Db/dblog.c Db/dbhash.c Db/dbcompare.c Db/dbquery.c Db/dbutil.c Db/dbmpool.c Db/dbschema.c dbmalloc.c -lm
